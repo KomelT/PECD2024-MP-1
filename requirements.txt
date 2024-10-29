@@ -1,1 +1,2 @@
 adafruit-circuitpython-dht
+adafruit-circuitpython-mcp3xxx
