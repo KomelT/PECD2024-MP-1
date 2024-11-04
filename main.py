@@ -6,11 +6,12 @@ from sensors import *
 
 # Init buzzer
 b = Buzzer()
-b.buzz_x_times(2)
+b.buzz_x_times(1)
 
 # Init sensors
 s = Sensors()
-print(s.read_temp_humid())
+print(f"DHT11: {s.read_temp_humid()}")
+print(f"Soil sens: {s.read_soil_humid()}")
 
 # Clean GPIO before exit
 GPIO.cleanup()
