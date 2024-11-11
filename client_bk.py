@@ -2,7 +2,7 @@ import socket
 import numpy as np
 from io import BytesIO
 
-PORT = 40007
+PORT = 8000
 
 
 def get_size(buf):

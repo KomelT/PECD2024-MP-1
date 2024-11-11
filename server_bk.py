@@ -10,7 +10,7 @@ def get_size(buf):
         return size
     raise RuntimeError
 
-PORT = 40007
+PORT = 4444
 basedir = os.path.abspath(os.path.dirname(__file__))
 os.environ['U2NET_HOME'] = basedir + '/u2net' # path to trained model
 
