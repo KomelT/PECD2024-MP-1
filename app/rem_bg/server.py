@@ -1,6 +1,12 @@
 import numpy as np
 import socket, os, signal
 from rembg import remove, new_session
+import cv2
+import matplotlib.pyplot as plt
+
+'''
+THIS IS THE CODE FOR THE SERVER-SIDE of the background removal API
+'''
     
 def plot_histograms(green_intensity, yellow_intensity, black_intensity):
     # Plot and save histogram for yellow intensities with specific scaling
@@ -20,11 +26,23 @@ def plot_histograms(green_intensity, yellow_intensity, black_intensity):
     plt.xlabel("Intensity")
     plt.ylabel("Frequency")
     green_output_path = 'green_histogram.png'
-    plt.savefig('green_histogram.png')    
+    plt.savefig(green_output_path)    
+    plt.close()  # Close the plot after saving
+    
+        # Plot and save histogram for green intensities with specific scaling
+    plt.figure(figsize=(8, 6))
+    plt.hist(black_intensity, bins=30, color='black', edgecolor='red')
+    plt.title("Histogram of Green Intensities in the Image")
+    plt.xlabel("Intensity")
+    plt.ylabel("Frequency")
+    black_output_path = 'black_histogram.png'
+    plt.savefig(black_output_path)    
     plt.close()  # Close the plot after saving
     
     print(f"Yellow histogram saved to: {yellow_output_path}")
     print(f"Green histogram saved to: {green_output_path}")
+    print(f"Black histogram saved to: {black_output_path}")
+
 
 def get_color_intensity(image_rgb, plot_histogram):
     # Define yellow mask: red and green channels should be high, blue should be low
@@ -49,12 +67,16 @@ def get_color_intensity(image_rgb, plot_histogram):
     return green_intensity, yellow_intensity, black_intensity
 
 
-def get_color_percentage(green_intensity, yellow_intensity, black_intensity):
-    # Calculate the percentage of black pixels
-    percentage_black = np.sum(mask_black) / mask_black.size * 100
-    print(f'Percentage of black pixels: {percentage_black:.2f}%')
-
-    return green_intensity, yellow_intensity, black_intensity
+def get_mean_intensity(green_intensity, yellow_intensity, black_intensity):
+    green_m= round(np.mean(green_intensity),2)
+    # Calculate mean and median intensity
+    yellow_m= round(np.mean(yellow_intensity),2)
+    #median_yellow_intensity = np.median(yellow_intensity)
+    black_m= round(np.mean(black_intensity),2)
+    arr = np.array([green_m, yellow_m, black_m])
+    return (arr)
+     
+    
     
 def get_size(buf):
     header = buf[:4].decode()
@@ -63,14 +85,12 @@ def get_size(buf):
         return size
     raise RuntimeError
 
-PORT = 4444
+PORT = 8000
 basedir = os.path.abspath(os.path.dirname(__file__))
 os.environ['U2NET_HOME'] = basedir + '/u2net' # path to trained model
 
 model_name = "isnet-general-use"
 session = new_session(model_name)
-
-
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 dt = np.uint8  # datatype
 
@@ -98,26 +118,17 @@ while True:
 
         print("I got the image")
     
-        output = remove(input_pic, session=session)
+        output = remove(input_pic, session=session, force_return_bytes=True)
+        output = cv2.imdecode(np.frombuffer(output, dt),cv2.IMREAD_COLOR) # cv2.IMREAD_COLOR in OpenCV 3.1
         cv2.imwrite('img_without_bg.jpg',output) # cv2 uses BGR by default 
+        
         image_rgb = cv2.cvtColor(output, cv2.COLOR_BGR2RGB)
         
         green_intensity, yellow_intensity, black_intensity = get_color_intensity(image_rgb, True)
-        green_percentage, yellow_percentage, black_percentage = get_color_percentage(green_intensity, yellow_intensity, black_intensity)
-        
-        
-        
-        
-        
-        
-
-
-       # output_size = int.to_bytes(len(output),4,byteorder='little')  
-       # dialog.sendall(b'SIZE ' + output_size + b' '+  output) 
-        
-        
-        
-        
+        mean_arr = get_mean_intensity(green_intensity, yellow_intensity, black_intensity)
+        print(f"Green mean: {mean_arr[0]} \n Yellow mean: {mean_arr[1]} \n Black mean: {mean_arr[2]}")
+        mean_arr_b = mean_arr.tobytes()        
+        dialog.sendall(b'SIZE ' + int.to_bytes(len(mean_arr_b) ,4,byteorder='little') + b' '+ mean_arr_b) 
         print("Image processed. End of session received...")
         dialog.close()
 
