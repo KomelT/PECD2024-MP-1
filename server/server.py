@@ -43,7 +43,8 @@ def plot_histograms(green_intensity, yellow_intensity, black_intensity):
     print(f"Green histogram saved to: {green_output_path}")
     print(f"Black histogram saved to: {black_output_path}")
 
-
+# Calculate intensity of the colors
+# set plot_histogram True for plotting the histrogram
 def get_color_intensity(image_rgb, plot_histogram):
     # Define yellow mask: red and green channels should be high, blue should be low
     yellow_mask = (image_rgb[:, :, 0] > 150) & (image_rgb[:, :, 1] > 150) & (image_rgb[:, :, 2] < 100)
@@ -66,17 +67,14 @@ def get_color_intensity(image_rgb, plot_histogram):
        
     return green_intensity, yellow_intensity, black_intensity
 
-
 def get_mean_intensity(green_intensity, yellow_intensity, black_intensity):
-    green_m= round(np.mean(green_intensity),2)
-    # Calculate mean and median intensity
-    yellow_m= round(np.mean(yellow_intensity),2)
+    # Calculate mean intensity
+    green_m = round(np.mean(green_intensity),2)
+    yellow_m = round(np.mean(yellow_intensity),2)
     #median_yellow_intensity = np.median(yellow_intensity)
-    black_m= round(np.mean(black_intensity),2)
+    black_m = round(np.mean(black_intensity),2)
     arr = np.array([green_m, yellow_m, black_m])
     return (arr)
-     
-    
     
 def get_size(buf):
     header = buf[:4].decode()
