@@ -1,7 +1,19 @@
+
+import cv2
+from PIL import Image
+import time
+import numpy as np
+from time import sleep
+import matplotlib.pyplot as plt
+from io import BytesIO
+
+from picamera2 import Picamera2 
+
+
 import socket
 import numpy as np
-from io import BytesIO
-import cv2
+#from io import BytesIO
+#import cv2
 
 '''
 THIS IS THE CODE FOR THE CLIENT-SIDE of the background removal API
@@ -43,14 +55,21 @@ def get_leaf_color_means(pic, dir_serv,size):
     s.close()
     return (mean_arr)
  
-    
-if __name__ == "__main__":
-    with open("../plant.jpg", "rb") as fd:
-        pic = BytesIO(fd.read()).getvalue()
-    
-    size = len(pic)
-    mean_arr = get_leaf_color_means(pic,"127.0.0.1",size)
+
+
+def get_percentage():
+    picam2 = Picamera2()
+    config = picam2.create_still_configuration({'format': 'RGB888', 'size': (4056, 3040)})
+    picam2.configure(config)
+
+    picam2.start()
+
+    time.sleep(2)
+    data = BytesIO()
+    picam2.capture_file(data, format='jpeg')
+    picam2.stop()
+    data_b = data.getvalue()
+    size = len(data_b)
+    mean_arr = get_leaf_color_means(data_b,"ordenador",size)
     print(f"Green mean: {mean_arr[0]} \n Yellow mean: {mean_arr[1]} \n Black mean: {mean_arr[2]}")
 
-
-    

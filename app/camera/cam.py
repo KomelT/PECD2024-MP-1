@@ -1,27 +1,56 @@
-
-import cv2
-from PIL import Image
-import time
+import socket
 import numpy as np
-from time import sleep
-import matplotlib.pyplot as plt
-from rem_bg import remove_bg_send
 from io import BytesIO
+import cv2
 
-from picamera2 import Picamera2 
+'''
+THIS IS THE CODE FOR THE CLIENT-SIDE of the background removal API
+'''
+PORT = 8000
 
-picam2 = Picamera2()
-config = picam2.create_still_configuration({'format': 'RGB888', 'size': (4056, 3040)})
-picam2.configure(config)
 
-picam2.start()
+def get_size(buf):
+    header = buf[:4].decode()
+    if header=='SIZE':
+        size = int.from_bytes(buf[5:9],byteorder='little') 
+        return size
+    raise RuntimeError("Decodification of the size parameter from the header failed. (Wrong header?)")
 
-time.sleep(2)
-data = BytesIO()
-picam2.capture_file(data, format='jpeg')
-picam2.stop()
-data_b = data.getvalue()
+# pic must be bytes
+def get_leaf_color_means(pic, dir_serv,size):
+    s = socket.socket( socket.AF_INET, socket.SOCK_STREAM )
+    s.connect((dir_serv,PORT) )
 
-pic = remove_bg_send(data_b,"ordenador",len(data_b))
-pic_buf = BytesIO(pic)
-dt = np.uint8
+    if not pic:
+        raise ValueError("Image is empty")
+    size_b =  int.to_bytes(size,4,byteorder='little')  
+    
+    s.sendall(b'SIZE ' + size_b + b' '+ pic)
+    print(f"Image sended ( {size} bytes )")
+
+    cont = 0
+    # first block and size
+    buf = s.recv(256)
+    cont += len(buf)
+    size = get_size(buf)
+        
+    calculated_means = buf[10:]
+    while cont < size:
+        buf = s.recv(4096)
+        calculated_means += buf
+        cont += len(buf)
+    mean_arr = np.frombuffer(calculated_means, dtype=float) # cv2.IMREAD_COLOR in OpenCV 3.1
+    s.close()
+    return (mean_arr)
+ 
+    
+if __name__ == "__main__":
+    with open("../plant.jpg", "rb") as fd:
+        pic = BytesIO(fd.read()).getvalue()
+    
+    size = len(pic)
+    mean_arr = get_leaf_color_means(pic,"127.0.0.1",size)
+    print(f"Green mean: {mean_arr[0]} \n Yellow mean: {mean_arr[1]} \n Black mean: {mean_arr[2]}")
+
+
+    
