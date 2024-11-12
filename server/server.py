@@ -61,11 +61,12 @@ def get_color_intensity(image_rgb, plot_histogram):
     mask_black = (image_rgb[:, :, 0] < black_threshold) &  (image_rgb[:, :, 1] < black_threshold) & (image_rgb[:, :, 2] < black_threshold)
     black_pixels = image_rgb[mask_black]
     black_intensity = (black_pixels[:, 0] + black_pixels[:, 1]+ black_pixels[:, 2]) / 3
-    
+
     if (plot_histogram):
        plot_histograms(green_intensity, yellow_intensity, black_intensity)   
        
     return green_intensity, yellow_intensity, black_intensity
+
 
 def get_mean_intensity(green_intensity, yellow_intensity, black_intensity):
     # Calculate mean intensity
@@ -73,6 +74,9 @@ def get_mean_intensity(green_intensity, yellow_intensity, black_intensity):
     yellow_m = round(np.mean(yellow_intensity),2)
     #median_yellow_intensity = np.median(yellow_intensity)
     black_m = round(np.mean(black_intensity),2)
+
+
+
     arr = np.array([green_m, yellow_m, black_m])
     return (arr)
     
@@ -117,10 +121,35 @@ while True:
         print("I got the image")
     
         output = remove(input_pic, session=session, force_return_bytes=True)
-        output = cv2.imdecode(np.frombuffer(output, dt),cv2.IMREAD_COLOR) # cv2.IMREAD_COLOR in OpenCV 3.1
-        cv2.imwrite('img_without_bg.jpg',output) # cv2 uses BGR by default 
+        output1 = cv2.imdecode(np.frombuffer(output, dt),cv2.IMREAD_COLOR) # cv2.IMREAD_COLOR in OpenCV 3.1
+
+
+        # Convert the image to HSV color space
+        hsv_image = cv2.cvtColor(output1, cv2.COLOR_BGR2HSV)
+
+        # Define HSV range for yellow color (you might need to adjust these values)
+        lower_yellow = np.array([20, 100, 100])
+        upper_yellow = np.array([30, 255, 255])
+
+        # Create a mask that captures areas in the yellow range
+        yellow_mask = cv2.inRange(hsv_image, lower_yellow, upper_yellow)
+
+        # Calculate the percentage of yellow pixels in the image
+        yellow_percentage = (cv2.countNonZero(yellow_mask) / yellow_mask.size) * 100
+
+        print(f"Yellow area percentage: {yellow_percentage:.2f}%")
+
+        # Decide if the plant is turning yellow based on a threshold
+        if yellow_percentage > 5:  # Adjust threshold as needed
+            print("The plant is showing signs of yellowing.")
+        else:
+            print("The plant appears healthy.")
+
+
+
+        cv2.imwrite('img_without_bg.jpg',output1) # cv2 uses BGR by default
         
-        image_rgb = cv2.cvtColor(output, cv2.COLOR_BGR2RGB)
+        image_rgb = cv2.cvtColor(output1, cv2.COLOR_BGR2RGB)
         
         green_intensity, yellow_intensity, black_intensity = get_color_intensity(image_rgb, True)
         mean_arr = get_mean_intensity(green_intensity, yellow_intensity, black_intensity)
