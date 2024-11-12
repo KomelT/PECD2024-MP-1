@@ -7,6 +7,12 @@ class Parser:
         self.max_air_humidity = 9999.0
         self.max_soil_humidity = 9999.0
         self.max_air_temp = 999.0
+        
+        # color mean baselines
+        self.green_mean_bsline = None
+        self.yellow_mean_bsline = None
+        self.back_mean_bsline = None
+
 
     def read_conf(self):
         with open("./configuration.txt", "r") as f:
@@ -62,3 +68,16 @@ class Parser:
 
         print(f"max_air_temp: {self.max_air_temp}")
         print(f"min_air_temp: {self.min_air_temp} \n")
+
+    def set_colors_baseline_mean(self, green_mean_bsline, yellow_mean_bsline, black_mean_bsline):
+        # color mean baselines
+        self.green_mean_bsline = green_mean_bsline
+        self.yellow_mean_bsline = yellow_mean_bsline
+        self.back_mean_bsline = black_mean_bsline
+        
+    def set_colors_baseline_mean(self, green_mean_bsline, black_mean_bsline):
+        pass
+
+
+    
+    
