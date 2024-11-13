@@ -75,7 +75,7 @@ I have performed the testwith 3 different OSes. Power draw was mesaured 3 minute
 
 - Alpine Linux 1827.28 mW
 - Raspberry PI OS 1795.26 mW
-- Raspberry PI Lite 1614.80 mW
+- Raspberry PI Lite 1774.07 mW
 
 Consclusion: I thought Alpine Linux will perform the best, but it actually didn't. We will use Raspberry PI Lite for other test and for final product.
 
