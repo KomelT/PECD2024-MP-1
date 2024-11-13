@@ -42,9 +42,22 @@ def process():
 
         # Calculate the percentage of yellow pixels in the image
         yellow_percentage = (cv2.countNonZero(yellow_mask) / yellow_mask.size) * 100
+        
+        # For black color
+        lower_black = np.array([0, 0, 0])
+        upper_black = np.array([180, 255, 50])  
+        black_mask = cv2.inRange(hsv_image, lower_black, upper_black)
+        black_percentage = (cv2.countNonZero(black_mask) / black_mask.size) * 100
+        
+        # For green color
+        lower_green = np.array([35, 100, 100])
+        upper_green = np.array([85, 255, 255])
+        green_mask = cv2.inRange(hsv_image, lower_green, upper_green)
+        green_percentage = (cv2.countNonZero(green_mask) / green_mask.size) * 100
+
 
         # Return the yellow percentage as a JSON response
-        return jsonify({"yellow_percentage": yellow_percentage})
+        return jsonify({"yellow_percentage": yellow_percentage, "green_percentage": green_percentage, "black_percentage": black_percentage})
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500

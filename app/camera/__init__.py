@@ -25,4 +25,5 @@ class Camera:
         picam2.stop()
 
         r = requests.post(self.sever_address, files={"image": pic.getvalue()})
-        return r.json()["yellow_percentage"]
+        percentage = json.loads(r.json())
+        return percentage
