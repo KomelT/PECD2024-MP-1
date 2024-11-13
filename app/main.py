@@ -16,7 +16,19 @@ print(f"Soil sensor: {s.read_soil_humid()}")
 
 # Init camera
 c = Camera()
-print(f"Yellow percentage: {c.get_percentage()}")
+percent = c.get_percentage()
+print(f"Yellow percentage: {percent['yellow_percentage']}")
+print(f"Black percentage: {percent['black_percentage']}")
+print(f"Green percentage: {percent['green_percentage']}")
+
+
+
+# 1. initial sensing
+# 2. once a day humidity and temp 
+# 3. if is more than 21 degrees -> sensing 12 hours
+# 4 if humidity very low -> picture
+# 5 pif
+
 
 # Clean GPIO before exit
 GPIO.cleanup()
