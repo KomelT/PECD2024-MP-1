@@ -6,14 +6,7 @@ Project for class PECD (Programming energy constrained devices), at FRI, Univers
 
 ![Wiring diagram](https://raw.githubusercontent.com/KomelT/PECD2024-MP-1/refs/heads/main/wiring/wiring.png)
 
-## Raspberry PI energy saving
-
-- **Using simple OS**
-  - Alpine Linux
-- **Disabe 3 cores**
-  - Adding `maxcpus=1` into `/boot/firmware/cmdline.txt`
-- **Disable USB controller**
-  - `echo '1-1' |sudo tee /sys/bus/usb/drivers/usb/unbind`
+## [Raspberry PI energy saving](https://github.com/KomelT/PECD2024-MP-1/tree/main/energy_saving)
 
 ## Disclaimer
 
