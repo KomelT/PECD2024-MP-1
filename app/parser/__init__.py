@@ -74,11 +74,8 @@ class Parser:
         self.green_mean_bsline = green_mean_bsline
         self.yellow_mean_bsline = yellow_mean_bsline
         self.back_mean_bsline = black_mean_bsline
-        
+                
     def check_leaf_colors(self):
         pass
-        
 
-
-    
     
