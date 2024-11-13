@@ -71,13 +71,18 @@ dtparam=eth_led1=4
 ## What does the numbers say?
 
 **OS Test**
-I have performed the testwith 3 different OSes. Power draw was mesaured 3 minutes after boot for 50s with enabled Wi-Fi.
+We have performed the test with 3 different OSes. Power draw was mesaured 3 minutes after boot for 50s with enabled Wi-Fi.
 
 - Alpine Linux 1827.28 mW
 - Raspberry PI OS 1795.26 mW
 - Raspberry PI Lite 1774.07 mW
 
-Consclusion: I thought Alpine Linux will perform the best, but it actually didn't. We will use Raspberry PI Lite for other test and for final product.
+Consclusion: We thought Alpine Linux will perform the best, but it actually didn't. We will use Raspberry PI Lite for other test and for final product.
+
+**Core Test**
+Again power was mesaured 3 minutes after boot for 50s with enabled Wi-Fi, but this time with only one core enabled.
+
+Power usage was: 1619.73 mW
 
 ## Resources
 
