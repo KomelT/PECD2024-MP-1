@@ -2,6 +2,34 @@
 
 Project for class PECD (Programming energy constrained devices), at FRI, University of Ljubljana.
 
+## Running
+
+### Server
+
+```bash
+cd server
+
+docker compose build
+
+docker compose up -d
+```
+
+### App
+
+```bash
+cd app
+
+nano main.py # edit server address
+
+cp planter.service /etc/systemd/system/planter.service
+
+pip3 install -r requirements.txt
+
+systemctl enable planter.service
+
+systemctl start planter.service
+```
+
 ## Wiring
 
 ![Wiring diagram](https://raw.githubusercontent.com/KomelT/PECD2024-MP-1/refs/heads/main/wiring/wiring.png)

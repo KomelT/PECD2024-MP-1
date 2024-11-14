@@ -1,0 +1,14 @@
+[Unit]
+Description=Planter PECD Python Service
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+ExecStart=python /root/PECD/PECD2024-MP-1/app/main.py
+
+[Install]
+WantedBy=multi-user.target
