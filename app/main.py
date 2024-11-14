@@ -1,9 +1,15 @@
+from state import State
 from buzzer import Buzzer
 from sensors import Sensors
 from camera import Camera
 
 # GPIO mode is set to BCM, because of adafruit_dht library
 # What? https://raspi.tv/2013/rpi-gpio-basics-4-setting-up-rpi-gpio-numbering-systems-and-inputs
+
+# Init State
+state = State()
+if not state.halted:
+    exit(0)
 
 # Init buzzer
 b = Buzzer()
@@ -22,9 +28,8 @@ print(f"Black percentage: {percent['black_percentage']}")
 print(f"Green percentage: {percent['green_percentage']}")
 
 
-
 # 1. initial sensing
-# 2. once a day humidity and temp 
+# 2. once a day humidity and temp
 # 3. if is more than 21 degrees -> sensing 12 hours
 # 4 if humidity very low -> picture
 # 5 pif
