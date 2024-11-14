@@ -23,6 +23,8 @@ nano main.py # edit server address
 
 cp planter.service /etc/systemd/system/planter.service
 
+apt install python3-pip python3-picamera2 -y
+
 pip3 install -r requirements.txt
 
 systemctl enable planter.service
