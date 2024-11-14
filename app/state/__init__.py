@@ -1,5 +1,6 @@
 import json, os
 from parser import *
+import signal
 
 class State:
     def __init__(self, file_location="./leaf_state.json"):
@@ -9,6 +10,7 @@ class State:
         self.halted = False
         self.waking_up = False
         self.get_state_from_file()
+        signal.signal(signal.SIGINT, self.ctrl_c_handler)
 
     def get_state_from_file(self):
         try:
@@ -43,7 +45,7 @@ class State:
         os.system("poweroff")
         exit(0)
         
-    
-    
-        
-    
+    def ctrl_c_handler(self):
+        os.remove(self.file_location)
+        print("Exiting...")
+        exit(0)
