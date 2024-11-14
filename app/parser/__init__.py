@@ -2,11 +2,11 @@ class Parser:
     def __init__(self):
         self.min_air_humidity = 0.0
         self.min_soil_humidity = 0.0
-        self.min_air_temp = -999.0
+        self.min_air_temp = 0.0
 
-        self.max_air_humidity = 9999.0
-        self.max_soil_humidity = 9999.0
-        self.max_air_temp = 999.0
+        self.max_air_humidity = 100.0
+        self.max_soil_humidity = 100.0
+        self.max_air_temp = 60.0
 
     def read_conf(self):
         with open("./configuration.txt", "r") as f:

@@ -39,12 +39,12 @@ soil_humid_out_range = False
 
 if not parser.in_range_air_humid(air_humid):
     buzzer.buzz_x_times(1)
-    #sleep(1)
+    sleep(1)
     
 if not parser.in_range_air_temp(air_temp):
     air_temp_out_range = True
     buzzer.buzz_x_times(2)
-    #sleep(1)
+    sleep(1)
     
 if not parser.in_range_soil_humid(soil_humid):
     soil_humid_out_range = True

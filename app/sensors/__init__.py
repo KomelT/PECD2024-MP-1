@@ -26,9 +26,9 @@ class Sensors:
 
     def read_soil_humid(self):
         try:
-            raw_percentage = self.soil_humid.value
-            log_event(f"soil_humid = {raw_percentage}")
-            return round(raw_percentage * 100, 2)
+            percentage = round(self.soil_humid.value * 100, 2)
+            log_event(f"soil_humid = {percentage}")
+            return percentage
         except RuntimeError as e:
             log_event(f"[ERROR] While reading soil humidity: {e}")
             return None
