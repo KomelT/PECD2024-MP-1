@@ -1,3 +1,6 @@
+import os
+
+
 class Parser:
     def __init__(self):
         self.min_air_humidity = 0.0
@@ -9,7 +12,8 @@ class Parser:
         self.max_air_temp = 60.0
 
     def read_conf(self):
-        with open("./configuration.txt", "r") as f:
+        basedir = os.path.abspath(os.path.dirname(__file__))
+        with open(f"{basedir}/../configuration.txt", "r") as f:
             while True:
                 line = f.readline()
                 if line == "":

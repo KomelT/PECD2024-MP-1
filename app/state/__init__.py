@@ -2,8 +2,12 @@ import json, os
 from parser import *
 import signal
 
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+
 class State:
-    def __init__(self, file_location="./leaf_state.json"):
+    def __init__(self, file_location= f"{basedir}/../leaf_state.json"):
         self.file_location = file_location
         self.plant_yellow_percentage = 0
         self.plant_black_percentage = 0
@@ -34,7 +38,7 @@ class State:
         with open(self.file_location, "w") as file:
             json.dump(data, file)
 
-    def set_plant_yellow_black_percentage(self, yellow_percentage,black_percentage):
+    def set_plant_yellow_black_percentage(self, yellow_percentage, black_percentage):
         self.plant_yellow_percentage = yellow_percentage
         self.plant_black_percentage = black_percentage
         self.dump_state()
@@ -44,7 +48,7 @@ class State:
         self.dump_state()
         os.system("poweroff")
         exit(0)
-        
+
     def ctrl_c_handler(self):
         os.remove(self.file_location)
         print("Exiting...")
