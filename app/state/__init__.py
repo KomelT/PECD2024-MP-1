@@ -7,6 +7,7 @@ class State:
         self.file_location = file_location
         self.plant_yellow_percentage = 0
         self.halted = False
+        self.waking_up = False
 
         self.get_state_from_file()
 
@@ -17,6 +18,7 @@ class State:
                 self.plant_yellow_percentage = data["plant_yellow_percentage"]
                 self.halted = data["halted"]
         except FileNotFoundError:
+            self.waking_up = True
             print("The file does not exist.")
         except json.JSONDecodeError:
             print("The file is not valid JSON.")

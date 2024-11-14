@@ -9,7 +9,8 @@ from RPi import GPIO
 
 # Init State
 state = State()
-if not state.halted:
+if not state.halted or not state.waking_up:
+    print("[INFO] Exiting because not waking from halted state")
     exit(0)
 
 # Init buzzer
