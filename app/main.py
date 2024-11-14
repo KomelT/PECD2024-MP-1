@@ -2,6 +2,7 @@ from state import State
 from buzzer import Buzzer
 from sensors import Sensors
 from camera import Camera
+from RPi import GPIO
 
 # GPIO mode is set to BCM, because of adafruit_dht library
 # What? https://raspi.tv/2013/rpi-gpio-basics-4-setting-up-rpi-gpio-numbering-systems-and-inputs
