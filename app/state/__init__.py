@@ -46,7 +46,7 @@ class State:
     def halt(self):
         self.halted = True
         self.dump_state()
-        os.system("poweroff")
+        os.system("sudo poweroff")
         exit(0)
 
     def ctrl_c_handler(self):
