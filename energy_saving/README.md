@@ -15,7 +15,7 @@
 
 - Setting CPU to "preset": `"powersave"| sudo tee /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor`
   OR
-- Manually specifaying frequency, appending code below into `/boot/config.txt`:
+- Manually specifaying frequency, appending code below into `/boot/firmware/config.txt`:
 
 ```
 [all]
@@ -28,7 +28,7 @@ arm_freq_max=900
 - `echo '1-1' |sudo tee /sys/bus/usb/drivers/usb/unbind`
 
 **Disable Wi-Fi**
-Add code bellow into `/boot/config.txt`:
+Add code bellow into `/boot/firmware/config.txt`:
 
 ```bash
 [all]
@@ -36,7 +36,7 @@ dtoverlay=disable-wifi
 ```
 
 **Disable Bluetooth**
-Add code bellow into `/boot/config.txt`:
+Add code bellow into `/boot/firmware/config.txt`:
 
 ```bash
 [all]
@@ -45,15 +45,14 @@ dtoverlay=disable-bt
 
 **Disable HDMI**
 
-- `sudo /opt/vc/bin/tvservice -o`
+- `vcgencmd display_power 0 3 %% vcgencmd display_power 0 7`
 
 **Disable RJ45 port**
 
-- Disable networking: `/etc/init.d/networking stop`
-- Power down USB chip: `echo 0x0 > /sys/devices/platform/bcm2708_usb/buspower`
+- `ip link set eth0 down`
 
 **Disable Onboard LEDs**
-Add code bellow into `/boot/config.txt`:
+Add code bellow into `/boot/firmware/config.txt`:
 
 ```bash
 [pi4]
@@ -70,7 +69,7 @@ dtparam=eth_led1=4
 
 ## What does the numbers say?
 
-**OS Test**
+**OS**
 We have performed the test with 3 different OSes. Power draw was mesaured 3 minutes after boot for 50s with enabled Wi-Fi.
 
 - Alpine Linux 1827.28 mW
@@ -79,10 +78,31 @@ We have performed the test with 3 different OSes. Power draw was mesaured 3 minu
 
 Consclusion: We thought Alpine Linux will perform the best, but it actually didn't. We will use Raspberry PI Lite for other test and for final product.
 
-**Core Test**
+**Cores**
 Again power was mesaured 3 minutes after boot for 50s with enabled Wi-Fi, but this time with only one core enabled.
 
-Power usage was: 1619.73 mW
+Power usage was: 1705.58 mW, which isn't signiicant power optimization, but let them disabled for now.
+
+**Underclocking**
+While idling the power usage was 1505.35 mW, which is an improvement.
+
+**USB**
+We tried to disable USBs, but it didnt made difference, with power usage, so we left USBs enabled.
+
+**Bluetooth**
+Same was with Bluetooth. We didn't saw a difference.
+
+**HDMI**
+Same was with HDMI. We didn't saw a difference.
+
+**Onboard LEDs**
+Same was with LEDs. They use so small amount of power that we didn't saw a difference.
+
+**Peripherals**
+With sensor / buzzer / ADC just plugged it we didn't notice any biger power draw.
+
+**ATtiny85**
+We mesaured it by itself and it used 43 mW.
 
 ## Resources
 
