@@ -1,7 +1,8 @@
 from picamera2 import Picamera2
-import time, json
+import time
 from io import BytesIO
 import requests
+
 
 class Camera:
     def __init__(self, sever_address="http://localhost:5000"):
@@ -11,7 +12,7 @@ class Camera:
         # Init the camera
         picam2 = Picamera2()
         config = picam2.create_still_configuration(
-            {"format": "RGB888", "size": (4056, 3040)}
+            {"format": "RGB888", "size": (1920, 1080)}
         )
         picam2.configure(config)
         picam2.start()
@@ -23,6 +24,4 @@ class Camera:
         picam2.stop()
 
         r = requests.get(self.sever_address, files={"image": pic.getvalue()})
-       # percentage = json.loads(str(r))
         return r.json()
-    
