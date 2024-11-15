@@ -17,6 +17,8 @@ docker compose up -d
 ### App
 
 ```bash
+raspi-config # enable SPI under Interface Options > SPI
+
 cd app
 
 nano main.py # edit server address
