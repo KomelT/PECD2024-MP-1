@@ -59,11 +59,11 @@ if ((air_humid_out_range or air_temp_out_range or soil_humid_out_range) and (is_
     log_event(f"camera has taken a pic: black={black_percentage}% , yellow={yellow_percentage}%")
     
     if (state.waking_up):
-        state.set_plant_yellow_black_percentage(yellow_percentage,black_percentage)
+        state.set_plant_yellow_black_percentage(plant_yellow_percentage,plant_black_percentage)
     else:
-        if (yellow_percentage > (state.yellow_percentage+THRESHOLD)):
+        if (yellow_percentage > (state.plant_yellow_percentage+THRESHOLD)):
             buzzer.buzz_x_times(4)
-        if (black_percentage > (state.black_percentage+THRESHOLD)):
+        if (black_percentage > (state.plant_black_percentage+THRESHOLD)):
             buzzer.buzz_x_times(5)   
             
 # Clean GPIO before exit
