@@ -1,4 +1,4 @@
-import os
+from os import path
 
 
 class Parser:
@@ -13,7 +13,7 @@ class Parser:
         self.max_air_temp = 60.0
 
     def read_conf(self):
-        basedir = os.path.abspath(os.path.dirname(__file__))
+        basedir = path.abspath(path.dirname(__file__))
         with open(f"{basedir}/../configuration.txt", "r") as f:
             while True:
                 line = f.readline()

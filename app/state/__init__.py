@@ -1,9 +1,9 @@
-import os
-import json
-import signal
+from os import path, system, remove
+from json import load, JSONDecodeError, dump
+from signal import signal, SIGINT, SIGTERM
 from RPi import GPIO
 
-basedir = os.path.abspath(os.path.dirname(__file__))
+basedir = path.abspath(path.dirname(__file__))
 
 
 class State:
@@ -15,23 +15,23 @@ class State:
         self.halted = False
         self.waking_up = False
         self.get_state_from_file()
-        signal.signal(signal.SIGINT, self.ctrl_c_handler)
-        signal.signal(signal.SIGTERM, self.ctrl_c_handler)
+        signal(SIGINT, self.ctrl_c_handler)
+        signal(SIGTERM, self.ctrl_c_handler)
         self.dump_state()
 
     def get_state_from_file(self):
         try:
             with open(self.file_location, "r") as file:
-                data = json.load(file)
+                data = load(file)
                 self.plant_yellow_percentage = data["plant_yellow_percentage"]
                 self.plant_black_percentage = data["plant_black_percentage"]
                 self.halted = data["halted"]
         except FileNotFoundError:
             self.waking_up = True
             print("[INFO] State file does not exist.")
-        except json.JSONDecodeError:
+        except JSONDecodeError:
             self.waking_up = True
-            print("[INFO] State file is not valid JSON.")
+            print("[INFO] State file is not valid ")
 
     def dump_state(self):
         data = {
@@ -40,7 +40,7 @@ class State:
             "halted": self.halted,
         }
         with open(self.file_location, "w") as file:
-            json.dump(data, file)
+            dump(data, file)
             file.close()
 
     def set_plant_yellow_black_percentage(self, yellow_percentage, black_percentage):
@@ -52,11 +52,11 @@ class State:
         GPIO.cleanup()
         self.halted = True
         self.dump_state()
-        os.system("sudo poweroff")
+        system("sudo poweroff")
         exit(0)
 
     def ctrl_c_handler(self, signum, frame):
         GPIO.cleanup()
-        os.remove(self.file_location)
+        remove(self.file_location)
         print("[INFO] Exiting...")
         exit(0)
