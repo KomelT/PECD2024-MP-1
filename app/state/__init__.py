@@ -27,10 +27,10 @@ class State:
                 self.halted = data["halted"]
         except FileNotFoundError:
             self.waking_up = True
-            print("State file does not exist.")
+            print("[INFO] State file does not exist.")
         except json.JSONDecodeError:
             self.waking_up = True
-            print("State file is not valid JSON.")
+            print("[INFO] State file is not valid JSON.")
 
     def dump_state(self):
         data = {
@@ -54,5 +54,5 @@ class State:
 
     def ctrl_c_handler(self, signum, frame):
         os.remove(self.file_location)
-        print("Exiting...")
+        print("[INFO] Exiting...")
         exit(0)

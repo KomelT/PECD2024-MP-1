@@ -18,8 +18,6 @@ def is_daylight():
     # Define the start and end times
     start_time = datetime.datetime.strptime("06:00:00", "%H:%M:%S").time()
     end_time = datetime.datetime.strptime("19:00:00", "%H:%M:%S").time()
-    print(start_time)
-    print(end_time)
-    print(start_time <= current_time <= end_time)
+
     # Check if the current time is between 6:00 AM and 7:00 PM
     return start_time <= current_time <= end_time
