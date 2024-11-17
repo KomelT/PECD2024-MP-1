@@ -48,11 +48,16 @@ s = Sensors()
 # will buzz twice if air temperature
 # and will buzz three times in case the soil humidity drops
 air_temp, air_humid = s.read_temp_humid()
+print(f"[INFO] Temp: {air_temp} Humid: {air_humid}")
 soil_humid = s.read_soil_humid()
+print(f"[INFO] Soil humid: {soil_humid}")
 
 air_humid_out_range = not parser.in_range_air_humid(air_humid)
+print(f"[INFO] Air humid out of range: {air_humid_out_range}")
 air_temp_out_range = not parser.in_range_air_temp(air_temp)
+print(f"[INFO] Air temp out of range: {air_temp_out_range}")
 soil_humid_out_range = not parser.in_range_soil_humid(soil_humid)
+print(f"[INFO] Soil humid out of range: {soil_humid_out_range}")
 
 if air_humid_out_range:
     buzzer.buzz_x_times(1)
@@ -65,9 +70,13 @@ if air_temp_out_range:
 if soil_humid_out_range:
     buzzer.buzz_x_times(3)
 
-if (air_humid_out_range or air_temp_out_range or soil_humid_out_range) and (
-    is_daylight()
-):
+take_pic = (
+    air_humid_out_range or air_temp_out_range or soil_humid_out_range
+) and is_daylight()
+
+print(f"[INFO] Take pic: {take_pic}")
+
+if take_pic:
     # Init Camera
     cam = Camera(sever_address="http://trojan:5000/process", local_mode=LOCAL_MODE)
     percentage = cam.get_percentage()
