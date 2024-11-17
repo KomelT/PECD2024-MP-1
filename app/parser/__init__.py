@@ -18,7 +18,7 @@ class Parser:
             while True:
                 line = f.readline()
                 if line == "":
-                    print("Configuration file is read")
+                    print("[INFO] Configuration file is read")
                     break
                 line_arr = line.split(" ")
 

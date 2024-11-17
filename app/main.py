@@ -78,7 +78,7 @@ if (air_humid_out_range or air_temp_out_range or soil_humid_out_range) and (
     )
 
     if state.waking_up:
-        state.set_plant_yellow_plant_black_percentage(
+        state.set_plant_yellow_black_percentage(
             plant_yellow_percentage, plant_black_percentage
         )
     else:
