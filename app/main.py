@@ -91,4 +91,5 @@ if (air_humid_out_range or air_temp_out_range or soil_humid_out_range) and (
 GPIO.cleanup()
 
 state.dump_state()
+print("[INFO] Exiting main.py")
 state.halt()
