@@ -49,7 +49,7 @@ class State:
         os.system("sudo poweroff")
         exit(0)
 
-    def ctrl_c_handler(self):
+    def ctrl_c_handler(self, signum, frame):
         os.remove(self.file_location)
         print("Exiting...")
         exit(0)
