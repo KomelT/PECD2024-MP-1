@@ -1,7 +1,8 @@
 import os
 import json
 import signal
-
+from RPi import GPIO
+from logs import log_event
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -49,12 +50,16 @@ class State:
         self.dump_state()
 
     def halt(self):
+        GPIO.cleanup()
         self.halted = True
         self.dump_state()
         os.system("sudo poweroff")
         exit(0)
 
     def ctrl_c_handler(self, signum, frame):
+        log_event("Exiting...")
+        log_event(f"{self.halted}")
+        GPIO.cleanup()
         os.remove(self.file_location)
         print("[INFO] Exiting...")
         exit(0)

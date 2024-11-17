@@ -21,6 +21,8 @@ class Camera:
             self.session = new_session("isnet-general-use")
 
     def get_percentage(self):
+        print("[INFO] Getting image")
+
         # Init the camera
         picam2 = Picamera2()
         config = picam2.create_still_configuration(
@@ -40,6 +42,8 @@ class Camera:
         return r.json()
 
     def process(self, input_pic):
+        print("[INFO] Processing image")
+
         # Remove the background using rembg
         output = remove(input_pic, session=self.session, force_return_bytes=True)
 
