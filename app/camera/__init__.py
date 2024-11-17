@@ -1,6 +1,7 @@
 from picamera2 import Picamera2
 from io import BytesIO
 import requests
+import os
 from rembg import remove, new_session
 import numpy as np
 import cv2
@@ -10,6 +11,13 @@ class Camera:
     def __init__(self, sever_address="http://localhost:5000", local_mode=False):
         self.sever_address = sever_address
         self.local_mode = local_mode
+
+        if self.local_mode:
+            basedir = os.path.abspath(os.path.dirname(__file__))            
+            os.environ["U2NET_HOME"] = f"{basedir}/u2net"
+
+            # Create a new rembg session
+            self.session = new_session("isnet-general-use")
 
     def get_percentage(self):
         # Init the camera
@@ -31,14 +39,11 @@ class Camera:
         return r.json()
 
     def process(self, input_pic):
-        # Create a new rembg session
-        session = new_session("isnet-general-use")
-
         # Read the image data as bytes
         input_bytes = input_pic.read()
 
         # Remove the background using rembg
-        output = remove(input_bytes, session=session, force_return_bytes=True)
+        output = remove(input_bytes, session=self.session, force_return_bytes=True)
 
         # Decode the processed image into an OpenCV format
         pic_bg = cv2.imdecode(np.frombuffer(output, np.uint8), cv2.IMREAD_COLOR)
