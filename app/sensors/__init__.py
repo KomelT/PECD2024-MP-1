@@ -6,6 +6,7 @@ from gpiozero import MCP3008
 
 class Sensors:
     def __init__(self, temp_humid_pin=D4, soil_humid_cs_pin=0):
+        print("[INFO] Sensors init")
         # Temperature and humidity sensor
         self.temp_humid_pin = temp_humid_pin
         self.temp_humid = DHT11(temp_humid_pin)

@@ -7,6 +7,8 @@ from RPi import GPIO
 from time import sleep
 from logs import log_event, is_daylight
 
+print("[INFO] Starting main.py")
+
 # GPIO mode is set to BCM, because of adafruit_dht library
 # What? https://raspi.tv/2013/rpi-gpio-basics-4-setting-up-rpi-gpio-numbering-systems-and-inputs
 

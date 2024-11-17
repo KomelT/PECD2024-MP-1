@@ -9,11 +9,12 @@ import cv2
 
 class Camera:
     def __init__(self, sever_address="http://localhost:5000", local_mode=False):
+        print("[INFO] Camera init")
         self.sever_address = sever_address
         self.local_mode = local_mode
 
         if self.local_mode:
-            basedir = os.path.abspath(os.path.dirname(__file__))            
+            basedir = os.path.abspath(os.path.dirname(__file__))
             os.environ["U2NET_HOME"] = f"{basedir}/u2net"
 
             # Create a new rembg session

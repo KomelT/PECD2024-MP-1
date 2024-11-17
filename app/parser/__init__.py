@@ -3,6 +3,7 @@ import os
 
 class Parser:
     def __init__(self):
+        print("[INFO] Parser init")
         self.min_air_humidity = 0.0
         self.min_soil_humidity = 0.0
         self.min_air_temp = 0.0

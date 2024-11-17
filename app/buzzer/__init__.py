@@ -5,6 +5,7 @@ from logs import log_event
 
 class Buzzer:
     def __init__(self, pin=18):
+        print("[INFO] Buzzer init")
         self.pin = pin
         GPIO.setup(self.pin, GPIO.OUT)
         self.pwm = GPIO.PWM(self.pin, 10)
