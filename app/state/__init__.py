@@ -16,7 +16,6 @@ class State:
         self.waking_up = False
         self.get_state_from_file()
         signal.signal(signal.SIGINT, self.ctrl_c_handler)
-        signal.signal(signal.SIGKILL, self.ctrl_c_handler)
         signal.signal(signal.SIGTERM, self.ctrl_c_handler)
 
     def get_state_from_file(self):
@@ -28,9 +27,10 @@ class State:
                 self.halted = data["halted"]
         except FileNotFoundError:
             self.waking_up = True
-            print("The file does not exist.")
+            print("State file does not exist.")
         except json.JSONDecodeError:
-            print("The file is not valid JSON.")
+            self.waking_up = True
+            print("State file is not valid JSON.")
 
     def dump_state(self):
         data = {

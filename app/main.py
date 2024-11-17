@@ -1,3 +1,4 @@
+from argparse import ArgumentParser
 from state import State
 from parser import Parser
 from buzzer import Buzzer
@@ -6,6 +7,19 @@ from camera import Camera
 from RPi import GPIO
 from time import sleep
 from logs import log_event, is_daylight
+
+parser = ArgumentParser(
+    prog="Planter",
+    description="Project for class PECD (Programming energy constrained devices), at FRI, University of Ljubljana.",
+)
+
+parser.add_argument(
+    "--service",
+    help="Tell program that is called from systemd service",
+    action="store_true",
+)
+
+args = parser.parse_args()
 
 print("[INFO] Starting main.py")
 
@@ -17,12 +31,9 @@ THRESHOLD = 0.9
 
 # Init State
 state = State()
-if not state.halted and not state.waking_up:
+if not state.halted and state.waking_up and args.service:
     print("[INFO] Exiting because not waking from halted state")
     exit(0)
-
-# Now the device is not halted
-state.halted = False
 
 # Init Parser
 parser = Parser()

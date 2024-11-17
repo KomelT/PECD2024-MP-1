@@ -3,7 +3,6 @@ import os
 
 
 def log_event(message):
-    print("[INFO] Logs init")
     basedir = os.path.abspath(os.path.dirname(__file__))
     fd = open(f"{basedir}/../events_log.txt", "a")
     fd.write(
