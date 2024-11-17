@@ -57,8 +57,6 @@ class State:
         exit(0)
 
     def ctrl_c_handler(self, signum, frame):
-        log_event("Exiting...")
-        log_event(f"{self.halted}")
         GPIO.cleanup()
         os.remove(self.file_location)
         print("[INFO] Exiting...")
