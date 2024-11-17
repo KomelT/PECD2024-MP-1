@@ -56,7 +56,7 @@ if (air_humid_out_range or air_temp_out_range or soil_humid_out_range) and (
     is_daylight()
 ):
     # Init Camera
-    cam = Camera(sever_address="http://trojan:5000/process")
+    cam = Camera(sever_address="http://trojan:5000/process", local_mode=LOCAL_MODE)
     percentage = cam.get_percentage()
     plant_yellow_percentage = percentage["plant_yellow_percentage"]
     plant_black_percentage = percentage["plant_black_percentage"]
