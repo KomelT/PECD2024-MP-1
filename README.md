@@ -36,9 +36,9 @@ systemctl start planter.service
 
 ## Wiring
 
-![Wiring diagram](https://raw.githubusercontent.com/KomelT/PECD2024-MP-1/refs/heads/main/wiring/wiring.png)
+![Wiring diagram](./wiring/wiring.png)
 
-## [Raspberry PI energy saving](https://github.com/KomelT/PECD2024-MP-1/tree/main/energy_saving)
+## [Raspberry PI energy saving](./energy_saving/README.md)
 
 ## Disclaimer
 
