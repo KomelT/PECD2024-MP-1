@@ -40,11 +40,8 @@ class Camera:
         return r.json()
 
     def process(self, input_pic):
-        # Read the image data as bytes
-        input_bytes = input_pic.read()
-
         # Remove the background using rembg
-        output = remove(input_bytes, session=self.session, force_return_bytes=True)
+        output = remove(input_pic, session=self.session, force_return_bytes=True)
 
         # Decode the processed image into an OpenCV format
         pic_bg = cv2.imdecode(np.frombuffer(output, np.uint8), cv2.IMREAD_COLOR)
