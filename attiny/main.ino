@@ -1,8 +1,8 @@
+const int waitFor = 7200000; // 2h in ms
+const int rpiPin = 0;
+
 void setup()
 {
-  const int waitFor = 7200000; // 2h in ms
-  const int rpiPin = 0;
-
   pinMode(rpiPin, OUTPUT);
   digitalWrite(rpiPin, HIGH);
 }
