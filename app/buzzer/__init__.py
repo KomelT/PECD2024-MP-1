@@ -1,5 +1,5 @@
 from time import sleep
-import RPi.GPIO as GPIO
+from RPi import GPIO
 from logs import log_event
 
 

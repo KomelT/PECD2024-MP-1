@@ -1,5 +1,5 @@
-import json, os
-from parser import *
+import os
+import json
 import signal
 
 
@@ -7,7 +7,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class State:
-    def __init__(self, file_location= f"{basedir}/../leaf_state.json"):
+    def __init__(self, file_location=f"{basedir}/../leaf_state.json"):
         self.file_location = file_location
         self.plant_yellow_percentage = 0
         self.plant_black_percentage = 0

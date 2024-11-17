@@ -1,10 +1,9 @@
 [Unit]
 Description=Planter PECD Python Service
-After=network.target
-StartLimitIntervalSec=0
+DefaultDependencies=false
 
 [Service]
-Type=simple
+Type=exec
 User=komelt
 ExecStart=python /home/komelt/PECD/PECD2024-MP-1/app/main.py
 
