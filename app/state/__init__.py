@@ -41,7 +41,8 @@ class State:
         }
         with open(self.file_location, "w") as file:
             dump(data, file)
-            file.close()
+            
+        file.close()
 
     def set_plant_yellow_black_percentage(self, yellow_percentage, black_percentage):
         self.plant_yellow_percentage = yellow_percentage

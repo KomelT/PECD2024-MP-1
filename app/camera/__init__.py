@@ -18,7 +18,6 @@ class Camera:
     def get_percentage(self):
         from picamera2 import Picamera2
         from io import BytesIO
-        from requests import get
         
         print("[INFO] Getting image")
 
@@ -36,6 +35,8 @@ class Camera:
 
         if self.local_mode:
             return self.process(pic.getvalue())
+        
+        from requests import get
 
         r = get(self.sever_address, files={"image": pic.getvalue()})
         return r.json()
