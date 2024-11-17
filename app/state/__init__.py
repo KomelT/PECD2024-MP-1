@@ -16,6 +16,8 @@ class State:
         self.waking_up = False
         self.get_state_from_file()
         signal.signal(signal.SIGINT, self.ctrl_c_handler)
+        signal.signal(signal.SIGKILL, self.ctrl_c_handler)
+        signal.signal(signal.SIGTERM, self.ctrl_c_handler)
 
     def get_state_from_file(self):
         try:
