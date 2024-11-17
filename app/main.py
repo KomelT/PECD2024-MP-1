@@ -31,7 +31,7 @@ THRESHOLD = 0.9
 
 # Init State
 state = State()
-if not state.halted and state.waking_up and args.service:
+if not state.halted and args.service:
     print("[INFO] Exiting because not waking from halted state")
     exit(0)
 

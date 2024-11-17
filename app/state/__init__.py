@@ -17,6 +17,7 @@ class State:
         self.get_state_from_file()
         signal.signal(signal.SIGINT, self.ctrl_c_handler)
         signal.signal(signal.SIGTERM, self.ctrl_c_handler)
+        self.dump_state()
 
     def get_state_from_file(self):
         try:
@@ -40,6 +41,7 @@ class State:
         }
         with open(self.file_location, "w") as file:
             json.dump(data, file)
+            file.close()
 
     def set_plant_yellow_black_percentage(self, yellow_percentage, black_percentage):
         self.plant_yellow_percentage = yellow_percentage
