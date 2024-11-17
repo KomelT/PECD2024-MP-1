@@ -6,6 +6,5 @@ DefaultDependencies=false
 Type=exec
 User=komelt
 ExecStart=python /home/komelt/PECD/PECD2024-MP-1/app/main.py --service
-
-[Install]
-WantedBy=multi-user.target
+Restart=on-failure
+RestartSec=3s
