@@ -60,8 +60,8 @@ if (air_humid_out_range or air_temp_out_range or soil_humid_out_range) and (
     # Init Camera
     cam = Camera(sever_address="http://trojan:5000/process", local_mode=LOCAL_MODE)
     percentage = cam.get_percentage()
-    plant_yellow_percentage = percentage["plant_yellow_percentage"]
-    plant_black_percentage = percentage["plant_black_percentage"]
+    plant_yellow_percentage = percentage["yellow_percentage"]
+    plant_black_percentage = percentage["black_percentage"]
     log_event(
         f"camera has taken a pic: black={plant_black_percentage}% , yellow={plant_yellow_percentage}%"
     )
