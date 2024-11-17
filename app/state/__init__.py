@@ -2,7 +2,6 @@ import os
 import json
 import signal
 from RPi import GPIO
-from logs import log_event
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
