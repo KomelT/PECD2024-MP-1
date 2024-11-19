@@ -35,6 +35,10 @@ if not state.halted and args.service:
     print("[INFO] Exiting because not waking from halted state")
     exit(0)
 
+if not is_daylight():
+    print("[INFO] Not daylight, exiting")
+    state.halt()
+
 # Init Parser
 parser = Parser()
 parser.read_conf()
@@ -71,7 +75,9 @@ if soil_humid_out_range:
     buzzer.buzz_x_times(3)
 
 # The condition is: ((some value out of range) and is daylight) or first_wake_up
-take_pic = ((air_humid_out_range or air_temp_out_range or soil_humid_out_range) and is_daylight()) or state.waking_up
+take_pic = (
+    air_humid_out_range or air_temp_out_range or soil_humid_out_range
+) or state.waking_up
 
 print(f"[INFO] Take pic: {take_pic}")
 
