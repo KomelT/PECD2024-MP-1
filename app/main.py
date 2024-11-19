@@ -70,9 +70,8 @@ if air_temp_out_range:
 if soil_humid_out_range:
     buzzer.buzz_x_times(3)
 
-take_pic = (
-    air_humid_out_range or air_temp_out_range or soil_humid_out_range
-) and is_daylight()
+# The condition is: ((some value out of range) and is daylight) or first_wake_up
+take_pic = ((air_humid_out_range or air_temp_out_range or soil_humid_out_range) and is_daylight()) or state.waking_up
 
 print(f"[INFO] Take pic: {take_pic}")
 
